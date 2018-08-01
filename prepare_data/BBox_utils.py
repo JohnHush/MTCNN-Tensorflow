@@ -47,12 +47,14 @@ def getDataFromTxt(txt, with_landmark=True):
     for line in lines:
         line = line.strip()
         components = line.split(' ')
+
+        components[0] = components[0].replace( '\\' , '/' )
         img_path = os.path.join(dirname, components[0]) # file path
         # bounding box, (x1, y1, x2, y2)
         #bbox = (components[1], components[2], components[3], components[4])
         bbox = (components[1], components[3], components[2], components[4])        
         bbox = [float(_) for _ in bbox]
-        bbox = map(int,bbox)
+        bbox = list( map(int,bbox) )
         # landmark
         if not with_landmark:
             result.append((img_path, BBox(bbox)))
